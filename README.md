@@ -1,5 +1,6 @@
 # fast-bbs
-基于fastadmin的bbs论坛插件，安装fastadmin后直接下载压缩包后本地安装插件即可(因官网不支持上架论坛类插件故只能开源到这里)
+基于 fastadmin 的 bbs 论坛插件，安装fastadmin后直接下载压缩包后本地安装插件即可(因官网不支持上架论坛类插件故只能开源到这里)
+fastadmin  bbs fastadmin-bbs fast-bbs
 
 ## 部署方法
 - 安装并部署fastadmin [官网下载地址](https://www.fastadmin.net/download.html)
