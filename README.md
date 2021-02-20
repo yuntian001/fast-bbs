@@ -4,7 +4,7 @@ fastadmin  bbs fastadmin-bbs fast-bbs
 
 ## 部署方法
 - 安装并部署fastadmin [官网下载地址](https://www.fastadmin.net/download.html)
-- 进入后台/插件管理/离线安装插件,上传下载的zip压缩包即可(需要在配置文件application/config.php中将unknownsources设置未true)。
+- 进入后台/插件管理/离线安装插件,上传下载的zip压缩包即可(需要在配置文件application/config.php中将unknownsources设置为true)。
 
 ## 示例地址
 - [implugin论坛](https://www.implugin.cn/b)
