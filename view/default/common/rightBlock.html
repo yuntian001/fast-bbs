@@ -1,0 +1,57 @@
+<div class="tabs search" style="height:33px">
+    <div class="tabs-item" style="width: 100%;align-items: center">
+        <form style="width: 100%" action="{:addon_url('bbs/index/index')}" method="get">
+        <div class="input-group" style="width: 100%;">
+            {if isset($type)}
+                <input type="hidden" name="type" value="{$type}">
+            {/if}
+            {if isset($menu_forum_id)}
+                <input type="hidden" name="id" value="{$menu_forum_id}">
+            {/if}
+            <input type="text" name="keywords" class="form-control" placeholder="请输入搜索项" style="height: 33px" value="{:isset($keywords)?$keywords:''}">
+            <span class="input-group-btn">
+                <button class="btn-tag btn-tag-blue" type="submit" style="height: 33px;width: 65px">
+                        搜索
+                </button>
+            </span>
+
+        </div>
+        </form>
+    </div>
+</div>
+<div class="list-page card" style="margin-top: 20px">
+    <div class="header">
+        {$config.title}
+    </div>
+    <div class="content">
+        {$config.brief}
+    </div>
+</div>
+<div class=" card">
+    <ul class="nav-list">
+        <li class="nav-item ">
+            <a href="{:addon_url('bbs/index/index',['id'=>0])}" class="nav-link {if isset($menu_forum_id)&&$menu_forum_id==0}active{/if}">全部</a>
+        </li>
+        {foreach $forums as $value}
+        <li class="nav-item">
+            <a href="{:addon_url('bbs/index/index',['id'=>$value.id])}" class="nav-link {if !empty($menu_forum_id)&&$menu_forum_id==$value.id}active{/if}">{$value.name}</a>
+        </li>
+        {/foreach}
+    </ul>
+</div>
+{if(!empty($config['url']))}
+<div class="list-page card" >
+    <div class="header">
+        推荐连接
+    </div>
+    <div class="content">
+        <ul class="link-list">
+            {foreach $config.url as $value}
+            <li>
+                <a href="{$value[1]}">{$value[0]}</a>
+            </li>
+            {/foreach}
+        </ul>
+    </div>
+</div>
+{/if}

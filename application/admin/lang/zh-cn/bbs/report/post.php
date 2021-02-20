@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'User_id'  =>  '举报用户',
+    'Thread_id'  =>  '所属主题',
+    'Type'  =>  '类型',
+    'Type 1'  =>  '主题',
+    'Type 2'  =>  '帖子',
+    'Value_id'  =>  '关联id',
+    'Value_user_id'  =>  '被举报人',
+    'Describe'  =>  '描述',
+    'Status'  =>  '状态',
+    'Status 0'  =>  '忽略',
+    'Status 1'  =>  '正常',
+    'Createtime'  =>  '创建时间',
+    'Updatetime'  =>  '更新时间',
+    'Forum_id'  =>  '所属板块',
+    'User_ip'  =>  '创建时ip',
+    'Brief'  =>  '简介',
+    'Last_time'  =>  '最后回复时间',
+    'View_number'  =>  '查看次数',
+    'Post_number'  =>  '回帖数量',
+    'Collect_number'  =>  '收藏数量',
+    'Report_number' => '被举报次数',
+    'Last_user_id'  =>  '最后发帖用户',
+    'Last_post_id'  =>  '最后帖子',
+];

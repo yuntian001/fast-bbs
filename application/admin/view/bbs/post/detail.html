@@ -1,0 +1,22 @@
+<div class="text-center">
+    <h3>{$row.thread.title}</h3>
+    <div>
+        点赞数:{$row.praise_number}
+        收藏数:{$row.collect_number}
+        评论数:{$row.post_number}
+        被举报数:{$row.report_number}
+    </div>
+    <div>
+        创建者: {$row.user.nickname}
+        创建时间:{$row.createtime}
+    </div>
+</div>
+<hr>
+<style>
+    img{
+        max-width: 100%;
+    }
+</style>
+<div style="margin: auto;max-width: 85%">
+    {$row.content_fmt}
+</div>

@@ -1,0 +1,133 @@
+<style>
+    .panel-post {
+        position: relative;
+    }
+    .img-border {
+        border-radius: 5px;
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+        width: 55px;
+        height: 55px;
+    }
+    .flow-hiden-1{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+    }
+    .thread-item{
+        display: flex;
+    }
+    .thread-item .item-img{
+        flex-shrink: 0;
+        margin-right: 10px;
+        width: 60px;
+        height: 60px;
+        background: #a0bee5;
+        padding-top: 7px;
+        color: #ffffff;
+        border-radius: 5px;
+
+    }
+    .thread-item a {
+        color: #2c3e50;
+        width: 100%;
+    }
+    .thread-item a:hover, .thread-item a:focus{
+        color: #11181f;
+        text-decoration: underline;
+        background-color: transparent;
+    }
+</style>
+<div class="container mt-20">
+    <div id="content-container" class="container">
+        <div class="row">
+            <div class="col-md-3">
+                {include file="common/sidenav" /}
+            </div>
+            <div class="col-md-9">
+                <div class="panel panel-default panel-user">
+                    <div class="panel-body">
+                        <div class="page-header panel-post">
+                            <h2>{$type==0?'主题':'回帖'}
+                                <div class="pull-right">
+                                    <a class="btn btn-link" href="{:url('/index/bbs/my/createList/type/0')}">我发布的主题</a>
+                                    <a class="btn btn-link" href="{:url('/index/bbs/my/createList/type/1')}">我发布的回帖</a>
+                                </div>
+                            </h2>
+                        </div>
+                        {if $list->isEmpty()}
+                        <div class="text-center" style="color: #969494"> 暂无数据 </div>
+                        {else/}
+
+                        {if $type ==0 }
+                        {foreach $list as $value }
+                        <div class="thread-item">
+                            <div class="text-center item-img">
+                                <span style="font-size: 1.4em;">{$value.post_number}</span>
+                                <br><small>回复</small>
+                            </div>
+                            <div>
+                                <h4 >
+                                    <a class="flow-hiden-1" href="{$value.deletetime?addon_url('bbs/thread/edit',['id'=>$value.id]):addon_url('bbs/thread/info',['id'=>$value.id])}" >
+                                        {if ($value.is_elite)}
+                                        <span>[精华]</span>
+                                        {/if}
+                                        {if $value.deletetime}
+                                        <span>[已删除]</span>
+                                        {/if}
+                                        {$value.title}
+                                    </a>
+                                </h4>
+                                <div class="text-muted">
+                                    <span>创建时间 : {$value.createtime}</span>
+                                    <span>回帖数量 : {$value.post_number}</span>
+                                    <span>点赞数量 : {$value.praise_number}</span>
+                                    <span>收藏数量 : {$value.collect_number}</span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        {/foreach}
+                        {else/}
+                        {foreach $list as $value }
+                        <div class="thread-item">
+                            <div class=" text-center item-img">
+                                <div>
+                                    <span style="font-size: 1.4em;">{$value.post_number}</span>
+                                    <br><small>回复</small>
+                                </div>
+                            </div>
+                            <div>
+                                <h4>
+                                    <a class="flow-hiden-1" href="{php} echo ($value['deletetime'] || !$value['thread']||$value['thread']['deletetime'])?'javascript:;':addon_url('bbs/thread/info',['id'=>$value['thread_id'],'post_id'=>$value['id']]);{/php}">
+                                        {if $value.deletetime}
+                                        <span>[已删除]</span>
+                                        {elseif !$value.thread||$value.thread.deletetime}
+                                        <span>[主题已删除]</span>
+                                        {/if}
+                                        {$value.brief?:'&nbsp;'}
+                                    </a>
+                                </h4>
+                                <div class="text-muted">
+                                    <span>创建时间 : {$value.createtime}</span>
+                                    <span>回帖数量 : {$value.post_number}</span>
+                                    <span>点赞数量 : {$value.praise_number}</span>
+                                    <span>收藏数量 : {$value.collect_number}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        {/foreach}
+                        {/if}
+                        <div class="pager">
+                            {$list->render()}
+                        </div>
+                        {/if}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

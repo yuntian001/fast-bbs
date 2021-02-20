@@ -1,0 +1,16 @@
+<ul class="list-group">
+    <li class="list-group-heading">{:__('论坛管理')}</li>
+    <!--如果需要直接跳转对应的模型(比如我的新闻,我的产品,发布新闻,发布产品)，可以在链接后加上 ?model_id=模型ID -->
+    <li class="list-group-item {if(request()->controller().'/'.request()->action())=='Bbs.my/collect'}active{/if}">
+        <a href="{:url('index/bbs.my/collect')}"><i class="fa fa-list fa-fw"></i> {:__('我的收藏')}</a>
+    </li>
+    <li class="list-group-item {if(request()->controller().'/'.request()->action())=='Bbs.my/createlist'}active{/if}">
+        <a href="{:url('index/bbs.my/createlist')}"><i class="fa fa-list fa-fw"></i> {:__('我的发布')}</a>
+    </li>
+    <li class="list-group-item {if(request()->controller().'/'.request()->action())=='Bbs.my/forum'}active{/if}">
+        <a href="{:url('index/bbs.my/forum')}"><i class="fa fa-list fa-fw"></i> {:__('我管理的板块')}</a>
+    </li>
+    <li class="list-group-item">
+        <a href="{:addon_url("bbs/thread/add")}"><i class="fa fa-edit fa-fw"></i> {:__('发帖')}</a>
+    </li>
+</ul>

@@ -1,0 +1,35 @@
+<div class="panel panel-default panel-intro">
+    <div class="panel-heading">
+        {:build_heading(null,FALSE)}
+        <ul class="nav nav-tabs" data-field="status">
+            <li class="active"><a href="#t-all" data-value="" data-toggle="tab">{:__('All')}</a></li>
+            {foreach name="statusList" item="vo"}
+            <li><a href="#t-{$key}" data-value="{$key}" data-toggle="tab">{$vo}</a></li>
+            {/foreach}
+        </ul>
+    </div>
+
+
+    <div class="panel-body">
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade active in" id="one">
+                <div class="widget-body no-padding">
+                    <div id="toolbar" class="toolbar">
+                        <a href="javascript:;" class="btn btn-primary btn-refresh" title="{:__('Refresh')}" ><i class="fa fa-refresh"></i> </a>
+                        <a href="javascript:;" class="btn btn-danger btn-del btn-disabled disabled {:$auth->check('bbs/thread/del')?'':'hide'}" title="{:__('Delete')}" ><i class="fa fa-trash"></i> {:__('Delete')}</a>
+                        <a class="btn btn-success btn-recyclebin btn-dialog {:$auth->check('bbs/thread/recyclebin')?'':'hide'}" href="bbs/thread/recyclebin" title="{:__('Recycle bin')}"><i class="fa fa-recycle"></i> {:__('Recycle bin')}</a>
+                    </div>
+                    <table id="table" class="table table-striped table-bordered table-hover table-nowrap"
+                           data-operate-detail="{:$auth->check('bbs/thread/detail')}"
+                           data-operate-setAllTop="{:$auth->check('bbs/thread/set_all_top')}"
+                           data-operate-setTop="{:$auth->check('bbs/thread/set_top')}"
+                           data-operate-setElite="{:$auth->check('bbs/thread/set_elite')}"
+                           data-operate-delElite="{:$auth->check('bbs/thread/del_elite')}"
+                           data-operate-del="{:$auth->check('bbs/thread/del')}"
+                           width="100%">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

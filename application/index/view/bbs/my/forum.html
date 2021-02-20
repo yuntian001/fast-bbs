@@ -1,0 +1,92 @@
+<style>
+    .panel-post {
+        position: relative;
+    }
+    .img-border {
+        border-radius: 5px;
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+        width: 55px;
+        height: 55px;
+    }
+    .flow-hiden-1{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+    }
+    .thread-item{
+        display: flex;
+    }
+    .thread-item .item-img{
+        flex-shrink: 0;
+        margin-right: 10px;
+        width: 60px;
+        height: 60px;
+        background: #a0bee5;
+        padding-top: 7px;
+        color: #ffffff;
+        border-radius: 5px;
+
+    }
+    .thread-item a {
+        color: #2c3e50;
+        width: 100%;
+    }
+    .thread-item a:hover, .thread-item a:focus{
+        color: #11181f;
+        text-decoration: underline;
+        background-color: transparent;
+    }
+</style>
+<div class="container mt-20">
+    <div id="content-container" class="container">
+        <div class="row">
+            <div class="col-md-3">
+                {include file="common/sidenav" /}
+            </div>
+
+            <div class="col-md-9">
+                <div class="panel panel-default panel-user">
+                    <div class="panel-body">
+                        <div class="page-header panel-post">
+                            <div class="alert alert-warning-light mt-1" role="alert" style="font-size: 1.5rem">
+                                您可以在您管理的板块下进行板块置顶、关闭主题、主题加精华操作
+                            </div>
+                        </div>
+                        {if $list->isEmpty()}
+                        <div class="text-center" style="color: #969494"> 暂无数据 </div>
+                        {else/}
+                        {foreach $list as $value }
+                        <div class="thread-item">
+                            <div class="text-center item-img">
+                                <span style="font-size: 1.4em;">{$value.today_threads}</span>
+                                <br><small>今日主题</small>
+                            </div>
+                            <div>
+                                <h4 >
+                                    <a class="flow-hiden-1" href="{:addon_url('bbs/index/index',['id'=>$value.id])}" >
+                                        {$value.name}
+                                    </a>
+                                </h4>
+                                <div class="text-muted">
+                                    <span>今日主题 : {$value.today_threads}</span>
+                                    <span>今日回帖 : {$value.today_posts}</span>
+                                    <span>主题数量 : {$value.thread_number}</span>
+                                    <span>回帖数量 : {$value.post_number}</span>
+                                    <span>精华主题 : {$value.elite_number}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        {/foreach}
+                        <div class="pager">
+                            {$list->render()}
+                        </div>
+                        {/if}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

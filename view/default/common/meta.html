@@ -1,0 +1,36 @@
+<meta charset="utf-8">
+<title>{$title|default=''} – {$site.name}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="renderer" content="webkit">
+
+{if isset($keywords)}
+<meta name="keywords" content="{$keywords}">
+{/if}
+{if isset($description)}
+<meta name="description" content="{$description}">
+{/if}
+
+<link rel="shortcut icon" href="__CDN__/assets/img/favicon.ico" />
+<link href="__CDN__/assets/libs/font-awesome/css/font-awesome{$Think.config.app_debug?'':'.min'}.css?v={$Think.config.site.version}" rel="stylesheet"/>
+<link href="__CDN__/assets/css/bootstrap{$Think.config.app_debug?'':'.min'}.css?v={$Think.config.site.version}" rel="stylesheet"/>
+<link href="__CDN__/assets/libs/fastadmin-layer/dist/theme/default/layer.css?v={$Think.config.site.version}" rel="stylesheet"/>
+<link href="__ADDON__/css/common.css?v={$Think.config.site.version}" rel="stylesheet"/>
+
+<script src="__CDN__/assets/libs/jquery/dist/jquery{$Think.config.app_debug?'':'.min'}.js?v={$Think.config.site.version}" ></script>
+<script src="__CDN__/assets/libs/bootstrap/dist/js/bootstrap{$Think.config.app_debug?'':'.min'}.js?v={$Think.config.site.version}" ></script>
+<script src="__CDN__/assets/libs/fastadmin-layer/dist/layer.js?v={$Think.config.site.version}" ></script>
+<script src="__ADDON__/libs/highlight10.3.2/highlight.min.js"></script>
+<link href="__ADDON__/libs/highlight10.3.2/default.min.css" rel="stylesheet">
+<script type="text/javascript" src="__ADDON__/libs/wangeditor/wangEditor.min.js"></script>
+<script type="text/javascript" src="__ADDON__/js/common.js"></script>
+
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+<!--[if lt IE 9]>
+  <script src="__CDN__/assets/js/html5shiv.js"></script>
+  <script src="__CDN__/assets/js/respond.min.js"></script>
+<![endif]-->
+<script type="text/javascript">
+    var require = {
+        config: {$config|json_encode}
+    };
+</script>

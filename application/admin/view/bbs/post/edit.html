@@ -1,0 +1,82 @@
+<form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Forum_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-forum_id" data-rule="required" data-source="forum/index" class="form-control selectpage" name="row[forum_id]" type="text" value="{$row.forum_id}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Thread_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-thread_id" data-rule="required" data-source="thread/index" class="form-control selectpage" name="row[thread_id]" type="text" value="{$row.thread_id}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('User_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-user_id" data-rule="required" data-source="user/user/index" data-field="nickname" class="form-control selectpage" name="row[user_id]" type="text" value="{$row.user_id}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Floor')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-floor" data-rule="required" class="form-control" name="row[floor]" type="number" value="{$row.floor}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Deletetime')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-deletetime" data-rule="required" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[deletetime]" type="text" value="{$row.deletetime|datetime}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Userip')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-userip" data-rule="required" class="form-control" name="row[userip]" type="text" value="{$row.userip}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Parent_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-parent_id" data-rule="required" data-source="parent/index" class="form-control selectpage" name="row[parent_id]" type="text" value="{$row.parent_id}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Id_path')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-id_path" data-rule="required" class="form-control" name="row[id_path]" type="text" value="{$row.id_path}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Content_markdown')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-content_markdown" class="form-control " rows="5" name="row[content_markdown]" cols="50">{$row.content_markdown}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Content_html')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-content_html" class="form-control " rows="5" name="row[content_html]" cols="50">{$row.content_html}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Content_fmt')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-content_fmt" class="form-control " rows="5" name="row[content_fmt]" cols="50">{$row.content_fmt}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Parent_floor')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-parent_floor" data-rule="required" class="form-control" name="row[parent_floor]" type="number" value="{$row.parent_floor}">
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

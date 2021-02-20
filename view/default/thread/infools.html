@@ -1,0 +1,349 @@
+<style>
+    .icon-btn .btn-tag:not(:first-child) {
+        padding-left: 0;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <main class="col-md-8 col-sm-12">
+            <div class="card card-content" style="min-height: 300px">
+                <div class="thread">
+                    <div class="thread-head">
+                        <div class="align-center">
+                            <img src="{$info.user.avatar|cdnurl}"
+                                 alt="{$info.user.nickname} "
+                                 class="img-rounded avatar">
+                            <div class="flow-hiden-1 tools" style="max-width: 100px">{$info.user.nickname}</div>
+                            <div class="tools"> {$info.createtime}</div>
+                            {if(!empty($info.is_elite))}
+                            <div class="tag tools">精华</div>
+                            {/if}
+                        </div>
+                        <div class="title">
+                            {$info.title}
+                        </div>
+                    </div>
+                    <div class="thread-body" style="    max-height: 300px;">
+                        <div class="wang-editor content">
+                            {$info.content_fmt}
+                        </div>
+                    </div>
+                    <div class="text-center" style="margin-top: 10px">
+                        <a style="color: #0084ff;" class="show-content" style="display: none">
+                            <i class="fa fa-angle-down"></i> 阅读全文
+                        </a>
+                    </div>
+                    <div class="thread-footer">
+                            <span>
+                                <a class="btn-tag btn-tag-blue show-hide" data-change-dom="#comment-thread">回复</a>
+                                <a class="btn-tag btn-tag-blue-o active">精华</a>
+                                <a class="btn-tag btn-tag-blue-o">
+                                    全局置顶
+                                </a>
+                                <a class="btn-tag btn-tag-blue-o">板块置顶</a>
+                                <a class="btn-tag btn-tag-blue-o">
+                                    <i class="fa fa-close"></i>
+                                    关闭
+                                </a>
+                            </span>
+                        <span class="icon-btn">
+                                <a class="btn-tag">
+                                    <i class="fa fa-thumbs-o-up"></i> 263 赞
+                                </a>
+                                <a class="btn-tag">
+                                    <i class="fa fa-heart"> </i>
+                                    2800 喜欢
+                                </a>
+                                <a href="javascript:;" class="btn-tag hide-content" style="display: none">
+                                    收起 <i class="fa fa-angle-up"></i></i>
+                                </a>
+                            </span>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-content" id="comment-thread" style="display: none">
+                <div class="fast-comment">
+                    <div class="alert alert-info mt-1" role="alert">
+                        1. 富文本形式回复<br>
+                        2. 支持粘贴上传，直接粘贴图片即可上传<br>
+                    </div>
+                    <form action="{:addon_url('bbs/thread/comment')}" method="post">
+                        <div id="editor" style="min-height: 282px"></div>
+                        <input type="hidden" name="id" value="{$info.id}">
+                        <textarea style="display: none" name="content" id="content"></textarea>
+                        <a class="btn-tag btn-tag-blue sub-form" style="margin-top: 10px">提交</a>
+                    </form>
+                </div>
+            </div>
+            <div class="card" style="min-height: 300px">
+                <div class="list-page">
+                    <div class="list-item thread">
+                        <div class="thread-head">
+                            <img src="{$user.avatar|cdnurl}" style="width: 30px;height: 30px" alt="张三"
+                                 class="img-rounded">
+                            <span>张三</span>
+                            <span>2020-11-10 14:29</span>
+                        </div>
+                        <div class="thread-body" style="max-height: 200px">
+                            <div class="wang-editor">
+                                <p>
+                                    哈哈但是你哈呀
+                                </p>
+                                <p>
+                                    闹着玩
+                                </p>
+                            </div>
+                            <div class="text-center" style="margin-top: 10px">
+                                <a href="" style="color: #0084ff">
+                                    <i class="fa fa-angle-down"></i> 阅读全文
+                                </a>
+                            </div>
+                        </div>
+                        <div class="thread-footer">
+                            <a class="btn-tag btn-tag-blue">
+                                回复
+                            </a>
+                            <span class="icon-btn">
+                                <a class="btn-tag">
+                                <i class="fa fa-thumbs-o-up"></i> 263 赞
+                                </a>
+                                <a class="btn-tag">
+                                    <i class="fa fa-heart"> </i>
+                                    2800 喜欢
+                                </a>
+                                <a class="btn-tag">
+                                    <i class="fa fa-comment"></i> 365 条评论
+                                </a>
+
+                                <a class="btn-tag">
+                                    收起 <i class="fa fa-angle-up"></i></i>
+                                </a>
+                            </span>
+                        </div>
+                        <div class="list-page comment-comment">
+                            <div class="list-item thread">
+                                <div class="thread-head left-right-box">
+                                    <div class="left">
+                                        <img src="{$user.avatar|cdnurl}" style="width: 30px;height: 30px" alt="张三"
+                                             class="img-rounded">
+                                        <span>张三</span>
+                                        <span>2020-11-10 14:29 @4楼</span>
+                                    </div>
+
+                                    <span class="right"><a>3楼</a></span>
+                                </div>
+                                <div class="thread-body" style="max-height: 200px">
+                                    <div class="wang-editor">
+                                        <p>
+                                            哈哈但是你哈呀
+                                        </p>
+                                        <p>
+                                            闹着玩
+                                        </p>
+                                    </div>
+                                    <div class="text-center" style="margin-top: 10px">
+                                        <a href="" style="color: #0084ff">
+                                            <i class="fa fa-angle-down"></i> 阅读全文
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="thread-footer">
+                                    <a class="btn-tag btn-tag-primary btn-small">
+                                        回复
+                                    </a>
+                                    <a class="btn-tag btn-small btn-tag-primary active">
+                                        <i class="fa fa-thumbs-o-up"></i> 263 赞
+                                    </a>
+                                    <a class="btn-tag btn-small">
+                                        <i class="fa fa-heart"> </i>
+                                        2800 喜欢
+                                    </a>
+                                    <a class="btn-tag btn-small">
+                                        <i class="fa fa-angle-up"></i> 收起
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="list-item thread">
+                                <div class="thread-head left-right-box">
+                                    <div class="left">
+                                        <img src="{$user.avatar|cdnurl}" style="width: 30px;height: 30px" alt="张三"
+                                             class="img-rounded">
+                                        <span>张三</span>
+                                        <span>2020-11-10 14:29</span>
+                                    </div>
+
+                                    <span class="right"><a>3楼</a></span>
+                                </div>
+                                <div class="thread-body" style="max-height: 200px">
+                                    <div class="wang-editor">
+                                        <p>
+                                            哈哈但是你哈呀
+                                        </p>
+                                        <p>
+                                            闹着玩
+                                        </p>
+                                    </div>
+                                    <div class="text-center" style="margin-top: 10px">
+                                        <a href="" style="color: #0084ff">
+                                            <i class="fa fa-angle-down"></i> 阅读全文
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="thread-footer">
+                                    <a class="btn-tag btn-tag-primary btn-small">
+                                        回复
+                                    </a>
+                                    <a class="btn-tag btn-small btn-tag-primary active">
+                                        <i class="fa fa-thumbs-o-up"></i> 263 赞
+                                    </a>
+                                    <a class="btn-tag btn-small">
+                                        <i class="fa fa-heart"> </i>
+                                        2800 喜欢
+                                    </a>
+                                    <a class="btn-tag btn-small">
+                                        收起 <i class="fa fa-angle-up"></i></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="list-item thread">
+                                <div class="thread-head left-right-box">
+                                    <div class="left">
+                                        <img src="{$user.avatar|cdnurl}" style="width: 30px;height: 30px" alt="张三"
+                                             class="img-rounded">
+                                        <span>张三</span>
+                                        <span>2020-11-10 14:29</span>
+                                    </div>
+
+                                    <span class="right"><a>3楼</a></span>
+                                </div>
+                                <div class="thread-body" style="max-height: 200px">
+                                    <div class="wang-editor">
+                                        <p>
+                                            哈哈但是你哈呀
+                                        </p>
+                                        <p>
+                                            闹着玩
+                                        </p>
+                                    </div>
+                                    <div class="text-center" style="margin-top: 10px">
+                                        <a href="" style="color: #0084ff">
+                                            <i class="fa fa-angle-down"></i> 阅读全文
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="thread-footer">
+                                    <a class="btn-tag btn-tag-primary btn-small">
+                                        回复
+                                    </a>
+                                    <a class="btn-tag btn-small btn-tag-primary active">
+                                        <i class="fa fa-thumbs-o-up"></i> 263 赞
+                                    </a>
+                                    <a class="btn-tag btn-small">
+                                        <i class="fa fa-heart"> </i>
+                                        2800 喜欢
+                                    </a>
+                                    <a class="btn-tag btn-small">
+                                        收起 <i class="fa fa-angle-up"></i></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comment-post">
+                            <form action="/" method="post">
+                                <div id="postEditor" style="min-height: 232px"></div>
+                                <button class="btn-tag btn-tag-blue" type="submit" style="margin-top: 10px">提交</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <aside class="col-sm-12 col-md-4">
+            <div class="tabs search">
+                <div class="tabs-item" style="width: 100%">
+                    <div class="input-group" style="width: 100%">
+                        <input type="text" class="form-control" placeholder="请输入搜索项" style="height: 42px">
+                        <span class="input-group-btn">
+                    <button class="btn-tag btn-tag-blue" style="height: 42px;">
+                        搜索
+                    </button>
+                    </span>
+                    </div>
+                </div>
+            </div>
+            <div class="list-page card" style="margin-top: 20px">
+                <div class="header">
+                    bbs轻量级论坛
+                </div>
+                <div class="content">
+                    Laravel 是优雅的 PHP Web 开发框架。具有高效、简洁、富于表达力等优点。采用 MVC 设计，是崇尚开发效率的全栈框架。是最受关注的 PHP 框架。
+                </div>
+            </div>
+            <div class=" card">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a class="nav-link">板块1</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">板块2</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">板块3</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="list-page card">
+                <div class="header">
+                    推荐连接
+                </div>
+                <div class="content">
+                    <ul class="link-list">
+                        <li>
+                            <a href="www.baidu.com">百度</a>
+                        </li>
+                        <li>
+                            <a href="www.baidu.com">百度</a>
+                        </li>
+                        <li>
+                            <a href="www.baidu.com">百度</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>
+<script type="text/javascript">
+    const editor = new wangEditor('#editor')
+    const $text1 = $('#content')
+    editor.config.onchange = function (html) {
+        // 第二步，监控变化，同步更新到 textarea
+        $text1.val(html)
+    }
+    editor.config.zIndex = 0;
+    editor.config.height = 200;
+    editor.create()
+
+    // 第一步，初始化 textarea 的值
+    $text1.val(editor.txt.html())
+
+    const postEditor = new wangEditor('#postEditor');
+    postEditor.config.zIndex = 0;
+    postEditor.config.height = 150;
+    postEditor.create()
+    $(function () {
+        $.ajax({
+            url: "{:addon_url('bbs/thread/commentList')}",
+            data: {id: '{$info.id}'},
+            dataType: 'json',
+            success: function (response) {
+                console.log(response);
+                template.compile($("#tpl-" + id_name).html())
+            },error:function (){
+                
+            }
+        });
+    });
+
+</script>

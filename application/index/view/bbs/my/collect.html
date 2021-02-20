@@ -1,0 +1,118 @@
+<style>
+    .panel-post {
+        position: relative;
+    }
+
+    .img-border {
+        border-radius: 5px;
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+        width: 60px;
+        height: 60px;
+    }
+
+    .flow-hiden-1 {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+    }
+
+    .thread-item {
+        display: flex;
+    }
+
+    .thread-item .item-img {
+        flex-shrink: 0;
+        margin-right: 10px;
+        width: 60px;
+        height: 60px;
+    }
+
+    .thread-item a {
+        color: #2c3e50;
+        width: 100%;
+    }
+
+    .thread-item a:hover, .thread-item a:focus {
+        color: #11181f;
+        text-decoration: underline;
+        background-color: transparent;
+    }
+</style>
+<div class="container mt-20">
+    <div id="content-container" class="container">
+        <div class="row">
+            <div class="col-md-3">
+                {include file="common/sidenav" /}
+            </div>
+            <div class="col-md-9">
+                <div class="panel panel-default panel-user">
+                    <div class="panel-body">
+                        <div class="page-header panel-post">
+                            <h2>{$type==0?'主题':'回帖'}
+                                <div class="pull-right">
+                                    <a class="btn btn-link" href="{:url('/index/bbs/my/collect/type/0')}">我收藏的主题</a>
+                                    <a class="btn btn-link" href="{:url('/index/bbs/my/collect/type/1')}">我收藏的回帖</a>
+                                </div>
+                            </h2>
+                        </div>
+                        {if $list->isEmpty()}
+                        <div class="text-center" style="color: #969494"> 暂无数据</div>
+                        {else/}
+                        {if $type ==0 }
+                        {foreach $list as $value }
+                        <div class=" thread-item">
+                            <div class="text-center item-img">
+                                <div>
+                                    <img class="img-responsive img-border"
+                                         src="{$value.user_avatar?cdnurl($value.user_avatar):letter_avatar($value.user_nickname)}">
+                                </div>
+                            </div>
+                            <div>
+                                <h4>
+                                    <a class="flow-hiden-1"
+                                       href="{:addon_url('bbs/thread/info',['id'=>$value.thread_id])}">{$value.thread_title}</a>
+                                </h4>
+                                <div class="text-muted">
+                                    <span>创建时间：{$value.thread_createtime|date='Y-m-d H:i:s',###}</span>
+                                    <span>收藏时间：{$value.createtime|date='Y-m-d H:i:s',###}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        {/foreach}
+                        {else/}
+                        {foreach $list as $value }
+                        <div class=" thread-item">
+                            <div class="item-img text-center">
+                                <div>
+                                    <img class="img-responsive img-border"
+                                         src="{$value.user_avatar?cdnurl($value.user_avatar):letter_avatar($value.user_nickname)}">
+                                </div>
+                            </div>
+                            <div>
+                                <h4>
+                                    <a class="flow-hiden-1"
+                                       href="{:addon_url('bbs/thread/info',['id'=>$value.thread_id,'post_id'=>$value.post_id])}">{$value.post_brief?:'&nbsp;'}</a>
+                                </h4>
+                                <div class="text-muted">
+                                    <span>创建时间：{$value.post_createtime|date='Y-m-d H:i:s',###}</span>
+                                    <span>收藏时间：{$value.createtime|date='Y-m-d H:i:s',###}</span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        {/foreach}
+                        {/if}
+                        <div class="pager">
+                            {$list->render()}
+                        </div>
+                        {/if}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

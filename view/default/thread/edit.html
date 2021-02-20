@@ -1,0 +1,75 @@
+<div class="container">
+    <div class="card" style="padding: 20px;">
+        <h2 style="display:block;margin-bottom: 20px;text-align: center">
+            {$info.title}
+        </h2>
+        <div class="alert alert-info mt-1" role="alert">
+            1. 请遵循国家法律法规，发布正规内容，禁止发布淫秽、色情、反动内容<br>
+            2. 富文本形式发布，不支持插入视频，不支持插入第三方网络图片<br>
+            3. 粘贴可直接上传图片<br>
+            4. 已被删除的主题修改后需要后台审核才可展示
+        </div>
+        <form class="form" method="post" action="">
+            <div class="row">
+                <div class="col-md-4 col-lg-4 col-sm-12" >
+                    <input readonly class="form-control" value="{$info.forum.name}">
+                </div>
+                <div class="col-md-8 col-lg-8 col-sm-12" >
+                    <input type="text" value="{$info.title}" name="title" class="form-control" placeholder="请输入主题名称" >
+                </div>
+            </div>
+            <div class="row" style="margin-top:20px;margin-bottom: 20px">
+                <div class="col-md-12 col-lg-12">
+                    <div id="editor" style="min-height: 528px" class="wang-editor">
+                        {$info.content_fmt}
+                    </div>
+                    <textarea  style="display: none" name="content" id="content"></textarea>
+                </div>
+            </div>
+            <div class="justify-center">
+                <button type="submit" class="btn-lg btn-tag btn-tag-blue" style="margin: auto">提 交</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+<script type="text/javascript">
+    bbsEditor.init('#editor',$('#content'));
+    $('.form').on('submit',function (){
+        let index = layer.load(0);
+        let _othis = $(this);
+        $("[type=submit]", _othis).prop("disabled", true);
+        $.ajax({
+            url: $(this).attr("action"),
+            data: $(this).serialize(),
+            method:$(this).attr('method'),
+            complete: function (xhr) {
+                $("[type=submit]", _othis).prop("disabled", false);
+            },
+            dataType: "json",
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (ret) {
+                if (ret.code === 1) {
+                    var msg = typeof ret.msg !== 'undefined' && ret.msg ? ret.msg : '操作成功';
+                    layer.msg(msg, {icon: 1},function (){
+                        if (typeof ret.url !== 'undefined' && ret.url) {
+                            location.href = ret.url;
+                        }
+                    });
+                } else {
+                    index && layer.close(index);
+                    var msg = typeof ret.msg !== 'undefined' && ret.msg ? ret.msg : '操作失败';
+                    layer.msg(msg, {icon: 2});
+                }
+            },
+            error: function (xhr) {
+                index && layer.close(index);
+                var ret = {code: xhr.status, msg: xhr.statusText, data: null};
+                alert(ret);
+            }
+        });
+        return false;
+    });
+</script>

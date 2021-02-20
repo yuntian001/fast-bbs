@@ -1,0 +1,8 @@
+<div class="text-center">
+    <h3>{$title} <span class="label {if ($trashed)}label-danger{else/}label-info{/if}" style="font-size: 10px;vertical-align: 3px;">{if ($trashed)}已删除{else/}正常{/if}</span></h3>
+    <div>创建者: {$create_user} 举报次数:{$number}  最后修改时间:{$post.updatetime|date="Y-m-d H:i:s",###}</div>
+</div>
+<hr>
+<div>
+    {$post.content_fmt}
+</div>

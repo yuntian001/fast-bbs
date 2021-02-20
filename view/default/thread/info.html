@@ -1,0 +1,542 @@
+<style>
+    .icon-btn .btn-tag {
+        padding-left: 0;
+    }
+    .thread-footer>.admin-btn>a:last-child{
+        margin-right: 12px;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <main class="col-md-8 col-sm-12">
+            <div class="card">
+                <div class="thread">
+                    <div class="thread-head">
+                        <div class="align-center">
+                            <img src="{$info.user.avatar|cdnurl}"
+                                 alt="{$info.user.nickname} "
+                                 class="img-rounded avatar">
+                            <div class="flow-hiden-1 tools" style="max-width: 100px">{$info.user.nickname}</div>
+                            <div class="tools"> {$info.createtime}</div>
+                            {if(!empty($info.is_elite))}
+                            <div class="tag tools">精华</div>
+                            {/if}
+                            {if($info.all_top >0)}
+                            <div class="tag tools">全局置顶</div>
+                            {/if}
+                            {if($info.top >0)}
+                            <div class="tag tools">板块置顶</div>
+                            {/if}
+                        </div>
+                        <div class="title">
+                            {$info.title}
+                        </div>
+                    </div>
+                    <div class="thread-body" style="    max-height: 300px;">
+                        <div class="wang-editor content">
+                            {$info.content_fmt}
+                        </div>
+                    </div>
+                    <div class="text-center" style="margin-top: 10px">
+                        <a style="color: #0084ff;display: none" class="show-content">
+                            <i class="fa fa-angle-down"></i> 阅读全文
+                        </a>
+                    </div>
+                    <div class="thread-footer">
+                            <span class="admin-btn">
+                                {if $info->status == 0}
+                                <a class="btn-tag btn-tag-blue show-hide" data-change-dom="#comment-thread">回复</a>
+                                {/if}
+                                {if $auth.is_admin}
+                                    {if $info->is_elite}
+                                        <a class="btn-tag btn-tag-blue-o active elite-thread">精华</a>
+                                    {else/}
+                                        <a class="btn-tag btn-tag-blue-o elite-no-thread">精华</a>
+                                    {/if}
+                                    <a class="btn-tag btn-tag-blue-o top-thread {if $info->top}active{/if}">板块置顶</a>
+                                {/if}
+                                {if $info.status == 0 && ($auth.is_author || $auth.is_admin)}
+                                <a class="btn-tag btn-tag-blue-o close-thread">
+                                    <i class="fa fa-close"></i>
+                                    关闭
+                                </a>
+                                {/if}
+                                {if $auth.is_author == 1}
+                                   <a class="btn-tag btn-tag-blue" href="{:addon_url('/bbs/thread/edit',['id'=>$info['id']])}">编辑</a>
+                                {/if}
+                            </span>
+                        <span class="icon-btn">
+                                {if $info->praise}
+                                <a class="btn-tag praise-thread" data-type="yes">
+                                    <i class="fa fa-thumbs-up"></i> {$info->praise_number} 赞
+                                </a>
+                                {else/}
+                                <a class="btn-tag praise-thread" data-type="no">
+                                    <i class="fa fa-thumbs-o-up"></i> {$info->praise_number} 赞
+                                </a>
+                                {/if}
+                                {if $info->collect}
+                                <a class="btn-tag collect-thread" data-type="yes">
+                                    <i class="fa fa-heart"> </i>
+                                    {$info->collect_number} 喜欢
+                                </a>
+                               {else/}
+                                <a class="btn-tag collect-thread" data-type="no">
+                                    <i class="fa fa-heart-o"> </i>
+                                    {$info->collect_number} 喜欢
+                                </a>
+                               {/if}
+                                <a href="javascript:;" class="btn-tag report" data-type="1" data-id="{$info.id}">
+                                    <i class="fa fa-exclamation-triangle"> </i> 举报
+                                </a>
+                                <a href="javascript:;" class="btn-tag hide-content" style="display: none">
+                                    收起 <i class="fa fa-angle-up"></i></i>
+                                </a>
+
+                            </span>
+                    </div>
+                </div>
+            </div>
+            {if $info->status == 0}
+            <div class="card card-content" id="comment-thread" style="display: none">
+                <div class="alert alert-info mt-1" role="alert">
+                    1. 富文本形式回复<br>
+                    2. 支持粘贴上传，直接粘贴图片即可上传<br>
+                </div>
+                <form action="{:addon_url('bbs/thread/comment')}" method="post">
+                    <div id="editor" style="min-height: 282px"></div>
+                    <input type="hidden" name="id" value="{$info.id}">
+                    <textarea style="display: none" name="content" id="content"></textarea>
+                    <a class="btn-tag btn-tag-blue sub-form" data-callback="resetCommentList" style="margin-top: 10px">提交</a>
+                </form>
+            </div>
+            {else/}
+            <div class="alert alert-warning mt-1" role="alert">
+                <div style="font-size: 1.2em;">当前主题已被设置禁止回复</div>
+            </div>
+            {/if}
+            <div class="card">
+                <div class="title">
+                    <span id="comment-num"></span>
+                    回复
+                </div>
+                <div class="page-container list-page" data-tpl="#tpl-comment-item" id="comment-page" data-num-id="comment-num" >
+                    <div class="description text-center">
+                        暂无数据
+                    </div>
+                </div>
+                <script id="tpl-comment-item" type="text/html">
+                    {%if loading%}
+                    <div class="description text-center">
+                        加载中 · · ·
+                    </div>
+                    {%else if data.length>0 %}
+                        {%each data%}
+                            <div class="list-item" id="post-{%$value.id%}">
+                                <div class="thread">
+                                    <div class="thread-head left-right-box">
+                                        <div class="left">
+                                            <img src="{%$value.user.avatar%}" style="width: 35px;height: 35px;border-radius: 35px;" alt="{%$value.user.nickname%}"
+                                                 class="img-rounded">
+                                            <span>{%$value.user.nickname%}</span>
+                                        </div>
+                                        <div class="right align-center">{%$value.createtime%}</div>
+                                    </div>
+                                    <div class="thread-body" style="max-height:200px">
+                                        <div class="wang-editor content">
+                                            {%#$value.content_fmt%}
+                                        </div>
+                                    </div>
+                                    <div class="text-center" style="margin-top: 10px">
+                                        <a style="color: #0084ff;display: none" class="show-content">
+                                            <i class="fa fa-angle-down"></i> 阅读全文
+                                        </a>
+                                    </div>
+                                    <div class="thread-footer">
+                                        {if $info->status == 0}
+                                        <a class="btn-tag comment-post-a" data-id="{%$value.id%}" data-first-id="{%$value.id%}" style="padding-left: 0; ">
+                                            <i class="fa fa-mail-reply"></i> 回复
+                                        </a>
+                                        {/if}
+                                        <span class="icon-btn">
+                                    {%if $value.praise%}
+                                    <a class="btn-tag praise-post" data-type="yes" data-id="{%$value.id%}">
+                                        <i class="fa fa-thumbs-up"></i>
+                                        {%$value.praise_number%} 赞
+                                    </a>
+                                    {%else%}
+                                        <a class="btn-tag praise-post" data-type="no" data-id="{%$value.id%}">
+                                            <i class="fa fa-thumbs-o-up"></i>
+                                            {%$value.praise_number%} 赞
+                                        </a>
+                                    {%/if%}
+                                    {%if $value.collect%}
+                                    <a class="btn-tag collect-post" data-type="yes" data-id="{%$value.id%}">
+                                        <i class="fa fa-heart"> </i>
+                                        {%$value.collect_number%} 收藏
+                                    </a>
+                                    {%else%}
+                                    <a class="btn-tag collect-post" data-type="no" data-id="{%$value.id%}">
+                                        <i class="fa fa-heart-o"> </i>
+                                        {%$value.collect_number%} 收藏
+                                    </a>
+                                    {%/if%}
+                                    <a class="btn-tag {%if $value.post_number > 0%}show-comment-post{%/if%}" data-id="{%$value.id%}" id="comment-post-comment-{%$value.id%}">
+                                        <i class="fa fa-comment"></i>
+                                        <span id="comment-post-num-{%$value.id%}">{%$value.post_number%} </span>
+                                        条回复
+                                    </a>
+                                    <a href="javascript:;" class="btn-tag report" data-type="2" data-id="{%$value.id%}">
+                                        <i class="fa fa-exclamation-triangle"> </i> 举报
+                                    </a>
+                                    <a class="btn-tag hide-content" style="display: none">
+                                        收起 <i class="fa fa-angle-up"></i></i>
+                                    </a>
+                                </span>
+                                    </div>
+                                </div>
+                                <div class="comment-post" id="comment-post-{%$value.id%}"></div>
+                                <div class="comment-post-list page-container list-page" style="display: none" data-tpl="#tpl-comment-post-item" id="comment-post-list-{%$value.id%}" data-num-id="comment-post-num-{%$value.id%}"></div>
+                            </div>
+                        {%/each%}
+                        {%if page%}
+                            <div class="page ajax-page">
+                                {%#page%}
+                            </div>
+                        {%/if%}
+                    {%else%}
+                    <div class="description text-center">
+                        暂无数据
+                    </div>
+                    {%/if%}
+                </script>
+                <script id="tpl-comment-post" type="text/html">
+                    <div class="alert alert-info mt-1" role="alert">
+                        1. 富文本形式回复<br>
+                        2. 支持粘贴上传，直接粘贴图片即可上传<br>
+                    </div>
+                    <form action="{:addon_url('bbs/post/comment')}" method="post">
+                        <div id="comment-post-editor" style="min-height: 200px"></div>
+                        <input type="hidden" name="id" value="<%=id%>">
+                        <textarea style="display: none" name="content" id="comment-post-content"></textarea>
+                        <a class="btn-tag btn-tag-blue sub-form" data-callback="resetCommentPostList" style="margin-top: 10px">提交</a>
+                    </form>
+                </script>
+                <script id="tpl-comment-post-item" type="text/html">
+                    {%if loading%}
+                    <div class="description text-center">
+                        加载中 · · ·
+                    </div>
+                    {%else if data.length>0 %}
+                        {%each data%}
+                        <div class="list-item thread" id="post-{%$value.id%}">
+                            <div class="thread-head left-right-box" style="font-size: 13px">
+                                <div class="left">
+                                    <img src="{%$value.user.avatar%}" style="width: 30px;height: 30px;border-radius: 30px;" alt="{%$value.user.nickname%}"
+                                         class="img-rounded">
+                                    <span>{%$value.user.nickname%} {%if $value.parent_id != $value.first_id%}@ {%$value.parent.user.nickname%}{%/if%}</span>
+                                </div>
+                                <span class="right align-center">{%$value.createtime%}</span>
+                            </div>
+                            <div class="thread-body" style="max-height: 200px">
+                                <div class="wang-editor content">
+                                    {%#$value.content_fmt%}
+                                </div>
+                            </div>
+                            <div class="text-center" style="margin-top: 10px">
+                                <a style="color: #0084ff;display: none" class="show-content">
+                                    <i class="fa fa-angle-down"></i> 阅读全文
+                                </a>
+                            </div>
+                            <div class="thread-footer">
+                                {if $info->status == 0}
+                                <a class="btn-tag  btn-small comment-post-a" data-first-id="{%$value.first_id%}" data-id="{%$value.id%}" style="padding-left:0;">
+                                    <i class="fa fa-mail-reply"></i> 回复
+                                </a>
+                                {/if}
+                                <span class="icon-btn">
+                                    {%if $value.praise%}
+                                    <a class="btn-tag praise-post btn-small" data-type="yes" data-id="{%$value.id%}">
+                                        <i class="fa fa-thumbs-up"></i>
+                                        {%$value.praise_number%} 赞
+                                    </a>
+                                    {%else%}
+                                    <a class="btn-tag praise-post btn-small" data-type="no" data-id="{%$value.id%}">
+                                        <i class="fa fa-thumbs-o-up"></i>
+                                        {%$value.praise_number%} 赞
+                                    </a>
+                                    {%/if%}
+                                    {%if $value.collect%}
+                                    <a class="btn-tag btn-small collect-post" data-type="yes" data-id="{%$value.id%}">
+                                        <i class="fa fa-heart"> </i>
+                                        {%$value.collect_number%} 收藏
+                                    </a>
+                                    {%else%}
+                                    <a class="btn-tag btn-small collect-post" data-type="no" data-id="{%$value.id%}">
+                                        <i class="fa fa-heart-o"> </i>
+                                        {%$value.collect_number%} 收藏
+                                    </a>
+                                    {%/if%}
+                                    <a href="javascript:;" class="btn-tag report btn-small" data-type="2" data-id="{%$value.id%}">
+                                        <i class="fa fa-exclamation-triangle"> </i> 举报
+                                    </a>
+                                    <a class="btn-tag hide-content btn-small" style="display: none">
+                                        收起 <i class="fa fa-angle-up"></i></i>
+                                    </a>
+                                </span>
+                            </div>
+                            <div class="comment-post" id="comment-post-{%$value.id%}"></div>
+                        </div>
+                        {%/each%}
+                        {%if page%}
+                        <div class="page ajax-page">
+                            {%#page%}
+                        </div>
+                        {%/if%}
+                    {%else%}
+                    <div class="description text-center">
+                        暂无数据
+                    </div>
+                    {%/if%}
+                </script>
+            </div>
+        </main>
+        <aside class="col-sm-12 col-md-4">
+            {include file="common/rightBlock" /}
+        </aside>
+    </div>
+</div>
+<script src="__ADDON__/libs/art-template4.13.2/template-web.js"></script>
+<script type="text/javascript">
+    // 标准语法的界定符规则
+    template.defaults.rules[1].test = /{%([@#]?)[ \t]*(\/?)([\w\W]*?)[ \t]*%}/;
+    template.defaults.debug=true;
+    const editor = bbsEditor.init('#editor',$('#content'),{height:'200'});
+    var resetCommentList = function (page,callBack){
+        ajaxPage("{:addon_url('bbs/thread/commentList',['id'=>$info.id])}", {page:page||1},$("#comment-page"),callBack);
+    };
+    $(function () {
+        init();
+        {if (isset($comment_page))}
+            resetCommentList({$comment_page},function (){
+                {if (isset($comment_post_page))}
+                    setTimeout(()=>{
+                        postCommentList({$post_first_id},{$comment_post_page},function (){
+                            setTimeout(()=>{
+                                document.getElementById("post-{$post_id}").scrollIntoView( {block: "center", inline: "nearest"});
+                            },0);
+                        });
+                    },0);
+                {else/}
+                    setTimeout(()=>{
+                        document.getElementById("post-{$post_id}").scrollIntoView( {block: "center", inline: "nearest"});
+                    },0);
+
+                {/if}
+            });
+        {else/}
+            resetCommentList();
+        {/if}
+    });
+    var resetCommentPostList = undefined;
+    let commentPostRender = template.compile($("#tpl-comment-post").html());
+    var postCommentList = function (id,page,callBack){
+        let Dom = $('#comment-post-list-'+id);
+        if(Dom.html()){
+            Dom.hide();
+            return Dom.html('');
+        }
+        $('.comment-post-list').html('');
+        $('.comment-post-list').hide();
+        let render = template.compile($("#tpl-comment-post-item").html());
+        Dom.html(render({loading:true}));
+        Dom.show();
+        ajaxPage("{:addon_url('bbs/post/commentList')}",{id:id,page:page || 1},Dom,callBack);
+    }
+    $(document).on('click','.comment-post-a',function (){
+        if($('#comment-post-'+$(this).data('id')).html()){
+            return $('#comment-post-'+$(this).data('id')).html('');
+        }
+        $('.comment-post').html('');
+        $('#comment-post-'+$(this).data('id')).html(commentPostRender({id:$(this).data('id')}));
+        bbsEditor.init('#comment-post-editor',$('#comment-post-content'),{height:'200'});
+        resetCommentPostList = ()=>{
+            $(this).click();
+            if($('#comment-post-list-' + $(this).data('first-id')).html()) {
+                ajaxPage("{:addon_url('bbs/post/commentList')}", {id: $(this).data('first-id')}, $('#comment-post-list-' + $(this).data('first-id')));
+            }else{
+                $('#comment-post-comment-'+ $(this).data('first-id')).addClass('show-comment-post');
+                $('#comment-post-comment-'+ $(this).data('first-id')).click();
+            }
+        }
+    });
+    $(document).on('click','.show-comment-post',function (){
+        postCommentList($(this).data('id'));
+    });
+    $(document).on('click','.praise-thread',function (){ //主题点赞
+        if($(this).data('type') == 'yes'){
+            apiAjax({
+                url: '{:addon_url("bbs/thread/noPraise")}',
+                dataType: 'json',
+                method:'post',
+                data:{id:'{$info.id}'},
+                success: (data)=>{
+                    $(this).data('type','no');
+                    $(this).html(`<i class="fa fa-thumbs-o-up"></i> ${data} 赞`);
+                }
+            });
+        }else {
+            apiAjax({
+                url: '{:addon_url("bbs/thread/praise")}',
+                dataType: 'json',
+                method:'post',
+                data:{id:'{$info.id}'},
+                success: (data)=>{
+                    $(this).data('type','yes');
+                    $(this).html(`<i class="fa fa-thumbs-up"></i> ${data} 赞`);
+                }
+            });
+        }
+    });
+    $(document).on('click','.collect-thread',function (){ //主题点赞
+        if($(this).data('type') == 'yes'){
+            apiAjax({
+                url: '{:addon_url("bbs/thread/noCollect")}',
+                dataType: 'json',
+                method:'post',
+                data:{id:'{$info.id}'},
+                success: (data)=>{
+                    $(this).data('type','no');
+                    $(this).html(`<i class="fa fa-heart-o"></i> ${data} 喜欢`);
+                }
+            });
+        }else {
+            apiAjax({
+                url: '{:addon_url("bbs/thread/collect")}',
+                dataType: 'json',
+                method:'post',
+                data:{id:'{$info.id}'},
+                success: (data)=>{
+                    $(this).data('type','yes');
+                    $(this).html(`<i class="fa fa-heart"></i> ${data} 喜欢`);
+                }
+            });
+        }
+    });
+    $(document).on('click','.praise-post',function (){ //回帖点赞
+        if($(this).data('type') == 'yes'){
+            apiAjax({
+                url: '{:addon_url("bbs/post/noPraise")}',
+                dataType: 'json',
+                method:'post',
+                data:{id:$(this).data('id')},
+                success: (data)=>{
+                    $(this).data('type','no');
+                    $(this).html(`<i class="fa fa-thumbs-o-up"></i> ${data} 赞`);
+                }
+            });
+        }else {
+            apiAjax({
+                url: '{:addon_url("bbs/post/praise")}',
+                dataType: 'json',
+                method:'post',
+                data:{id:$(this).data('id')},
+                success: (data)=>{
+                    $(this).data('type','yes');
+                    $(this).html(`<i class="fa fa-thumbs-up"></i> ${data} 赞`);
+                }
+            });
+        }
+    });
+    $(document).on('click','.collect-post',function (){ //收藏帖子
+        if($(this).data('type') == 'yes'){
+            apiAjax({
+                url: '{:addon_url("bbs/post/noCollect")}',
+                dataType: 'json',
+                method:'post',
+                data:{id:$(this).data('id')},
+                success: (data)=>{
+                    $(this).data('type','no');
+                    $(this).html(`<i class="fa fa-heart-o"></i> ${data} 收藏`);
+                }
+            });
+        }else {
+            apiAjax({
+                url: '{:addon_url("bbs/post/collect")}',
+                dataType: 'json',
+                method:'post',
+                data:{id:$(this).data('id')},
+                success: (data)=>{
+                    $(this).data('type','yes');
+                    $(this).html(`<i class="fa fa-heart"></i> ${data} 收藏`);
+                }
+            });
+        }
+    });
+    $(document).on('click','.close-thread',function (){ //关闭主题
+        layer.confirm('关闭主题后，任何人不可进行回复，此操作不可逆，确定关闭?', function(index){
+            //do something
+            apiAjax({
+                url: '{:addon_url("bbs/thread/close")}',
+                dataType: 'json',
+                method:'post',
+                data:{id:'{$info.id}'},
+                success: (data)=>{
+                    window.location.reload();
+                }
+            });
+            layer.close(index);
+        });
+
+    });
+    $(document).on('click','.elite-thread',function (){ //主题取消精华
+        apiAjax({
+            url: '{:addon_url("bbs/thread/delElite")}',
+            dataType: 'json',
+            method:'post',
+            data:{id:'{$info.id}'},
+            success: ()=>{window.location.reload();}
+        });
+    });
+    $(document).on('click','.elite-no-thread',function (){ //主题加精华
+
+        apiAjax({
+            url: '{:addon_url("bbs/thread/setElite")}',
+            dataType: 'json',
+            method:'post',
+            data:{id:'{$info.id}'},
+            success: ()=>{window.location.reload();}
+        });
+    });
+    $(document).on('click','.top-thread',function (){ //板块置顶
+        layer.prompt({
+            value: '{$info.top}',
+            title: '请输入排序值(倒序)(0代表取消置顶)',
+        }, function(value, index, elem){
+            layer.close(index);
+            apiAjax({
+                url: '{:addon_url("bbs/thread/setTop")}',
+                dataType: 'json',
+                method:'post',
+                data:{id:'{$info.id}',top:value},
+                success: ()=>{window.location.reload();}
+            });
+        });
+    });
+    $(document).on('click','.report',function (){ //举报
+        let _othis = $(this);
+        layer.prompt({
+            formType: 2,
+            value: '',
+            title: '请输入描述信息',
+        }, function(value, index, elem){
+            layer.close(index);
+            apiAjax({
+                url: _othis.data('type') == 1?'{:addon_url("bbs/thread/report")}':'{:addon_url("bbs/post/report")}',
+                dataType: 'json',
+                method:'post',
+                data:{id:_othis.data('id'),describe:value},
+            });
+        });
+    });
+</script>

@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="row">
+        <main class="col-md-8 col-sm-12">
+            <ul class="tabs">
+                <li class="tabs-item {if $type == 1}active{/if}">
+                    <a href="{:addon_url('bbs/index/index',['id'=>$menu_forum_id,'type'=>1])}">全部</a>
+                </li>
+                <li class="tabs-item {if $type == 2}active{/if}">
+                    <a href="{:addon_url('bbs/index/index',['id'=>$menu_forum_id,'type'=>2])}">精华</a>
+                </li>
+                <li class="tabs-item {if $type == 3}active{/if}">
+                    <a href="{:addon_url('bbs/index/index',['id'=>$menu_forum_id,'type'=>3])}">零回复</a>
+                </li>
+                <li class="tabs-item" style="margin-left: auto;display: flex;align-items: center">
+                    <button class="btn-tag btn-tag-blue" onclick="location.href='{:addon_url("bbs/thread/add")}'" style="margin-right: 10px">发帖</button>
+                    <button class="btn-tag" onclick="location.href='{:addon_url('bbs/index/index',['id'=>$menu_forum_id,'type'=>$type,'sort_type'=>(1-$sort_type)])}'">
+                            {if $sort_type ==1 }回复时间{else/}发布时间{/if}&nbsp;
+                            <i class="fa fa-sort"></i>
+                    </button>
+                </li>
+            </ul>
+            <div class="card">
+                {include file="common/threadList" /}
+            </div>
+        </main>
+        <aside class="col-sm-12 col-md-4">
+            {include file="common/rightBlock" /}
+        </aside>
+    </div>
+</div>

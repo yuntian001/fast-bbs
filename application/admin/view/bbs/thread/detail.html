@@ -1,0 +1,28 @@
+<div class="text-center">
+    <h3>{$info.title}</h3>
+    <p>
+        点赞数:{$info.praise_number}
+        收藏数:{$info.collect_number}
+        被举报数:{$info.report_number}
+        回帖数:{$info.post_number}
+    </p>
+    <p>
+        精华:{$info.is_elite?'是':'否'}
+        全局置顶(降序):{$info.all_top?:'否'}
+        板块置顶(降序):{$info.top?:'否'}
+    </p>
+    <p>
+        创建者: {$info.user.nickname}
+        创建时间:{$info.createtime}
+        最后回帖时间:{$info.last_time}
+    </p>
+</div>
+<hr>
+<style>
+    img{
+        max-width: 100%;
+    }
+</style>
+<div style="margin: auto;max-width: 85%">
+    {$info.content_fmt}
+</div>

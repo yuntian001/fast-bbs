@@ -1,0 +1,66 @@
+<div class="list-page">
+    {if $threads}
+    {foreach ($threads as $thread)}
+    <section class="list-item">
+        <a style="display: flex" class="list-thread" href="{:addon_url('bbs/thread/info',['id'=>$thread.id])}">
+            <img src="{$thread.user.avatar|cdnurl}" alt="{$thread.user.nickname}" class="avatar img-rounded">
+            <div class="column">
+                <div class="top">
+                    {if(!empty($thread.is_top))}
+                        <div class="tag">置顶</div>
+                    {/if}
+                    {if(!empty($thread.is_elite))}
+                        <div class="tag">精华</div>
+                    {/if}
+                    <h3 class="top">
+                        {$thread.title}
+                    </h3>
+                </div>
+
+                <div class="body">
+                    {$thread.brief}
+                </div>
+                <div class="bottom">
+                    <div title="作者：{$thread.user.nickname}" class="flow-hiden-1" style="max-width: 100px">
+                        {$thread.user.nickname}
+                    </div>
+                    <div title="发布于：{$thread.createtime}">
+                        {$thread.createtime_text}
+                    </div>
+                    <div title="{$thread.praise_number}赞">
+                        {if $thread.praise}
+                            <i class="fa fa-thumbs-up"></i>
+                        {else/}
+                            <i class="fa fa-thumbs-o-up"></i>
+                        {/if}
+                        {$thread.praise_number}
+                    </div>
+                    <div title="{$thread.collect_number}收藏" >
+                        {if $thread.collect}
+                        <i class="fa fa-heart"></i>
+                        {else/}
+                        <i class="fa fa-heart-o"></i>
+                        {/if}
+                        {$thread.collect_number}
+                    </div>
+                    <div title="{$thread.post_number}回复">
+                        <i class="fa fa-comment"></i> {$thread.post_number}
+                    </div>
+                    <div title="最后回复:{$thread.last_time}">
+                        最后回复于:{$thread.last_time_text}
+                    </div>
+                </div>
+            </div>
+        </a>
+    </section>
+    {/foreach}
+    {if $page}
+    <div class="page">
+        {$page}
+    </div>
+    {/if}
+    {else/}
+    <div class="text-center" style="color: #969494"> 暂无数据 </div>
+    {/if}
+
+</div>
