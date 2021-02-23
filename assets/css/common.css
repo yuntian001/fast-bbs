@@ -158,6 +158,18 @@ ul li,ul li:hover,ul li:focus {
     list-style:inside;
 }
 
+.wang-editor a{
+    color: #0077e6;
+}
+
+.wang-editor a:hover{
+    text-decoration: revert;
+}
+
+.wang-editor .w-e-toolbar ul li{
+    list-style: none;
+}
+
 a, a:hover, a:focus {
     color: inherit;
     cursor: pointer;
