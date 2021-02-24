@@ -2,6 +2,8 @@
 基于 fastadmin 的 bbs 论坛插件，安装fastadmin后直接下载压缩包后本地安装插件即可(因官网不支持上架论坛类插件故只能开源到这里)
 fastadmin  bbs fastadmin-bbs fast-bbs
 
+支持板块、版主管理、@回贴、 收藏、点赞、举报审核、精华、全局置顶、板块置顶、回复定位跳转。
+
 ## 部署方法
 - 安装并部署fastadmin [官网下载地址](https://www.fastadmin.net/download.html)
 - 进入后台/插件管理/离线安装插件,上传下载的zip压缩包即可(需要在配置文件application/config.php中将unknownsources设置为true)。
