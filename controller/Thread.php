@@ -180,6 +180,9 @@ class Thread extends Base
      */
     public function comment()
     {
+        if(!$this->auth->mobile){
+            return $this->error('绑定手机号后才可回复');
+        }
         if(\request()->isPost()){
             $id = input('id', 0);
             $m_thread = new \addons\bbs\model\Thread();
@@ -227,9 +230,6 @@ class Thread extends Base
     public function commentList(){
         if(!$this->request->isAjax()){
             return $this->error('请求异常');
-        }
-        if(!$this->auth->mobile){
-            return $this->error('绑定手机号后才可回复');
         }
         $id = input('id', 0);
         $where = ['parent_id'=>0];
